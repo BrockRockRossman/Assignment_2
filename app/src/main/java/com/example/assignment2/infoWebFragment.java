@@ -45,7 +45,7 @@ public class infoWebFragment extends Fragment {
                 return false;
             }
         });
-        webview.loadUrl("http://www.google.com");
+        webview.loadUrl("https://seekingalpha.com/");
 
 
         return view;

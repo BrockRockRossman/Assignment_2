@@ -113,9 +113,9 @@ public class TickerListFragment extends Fragment {
         tickerList = view.findViewById(R.id.tickerList);
 
         tickerArr = new ArrayList<>();
-        tickerArr.add(new ticker("NEE"));
-        tickerArr.add(new ticker("AAPL"));
-        tickerArr.add(new ticker("DIS"));
+        tickerArr.add(new ticker("NEE", false));
+        tickerArr.add(new ticker("AAPL", false));
+        tickerArr.add(new ticker("DIS", false));
 
 
 

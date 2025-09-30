@@ -87,11 +87,12 @@ public class infoWebFragment extends Fragment {
                     ticker tick = tickerList.get(i);
                     if(tick.isSelected())
                     {
+                        Log.i("change", "" + i);
                         webview.loadUrl("https://seekingalpha.com/symbol/" + tick.getTickerName());
                     }
                 }
 
-                webview.loadUrl("https://seekingalpha.com/symbol/NEE" );
+
 
             }
         });

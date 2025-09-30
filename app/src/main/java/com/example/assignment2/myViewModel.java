@@ -53,6 +53,13 @@ public class myViewModel extends ViewModel {
 
     }
 
+    public void addTicker(ticker tick) {
+        ArrayList<ticker> list = tickers.getValue();
+        list.add(tick);
+        tickers.setValue(list);
+
+    }
+
 
     private void loadtickers() {
 // Do an asynchronous operation to fetch tickers.

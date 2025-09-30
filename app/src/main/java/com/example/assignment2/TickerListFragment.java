@@ -44,41 +44,22 @@ public class TickerListFragment extends Fragment {
             boolean chosen = selected.isSelected();
             String name = selected.getTickerName();
 
+
+
             for(int i = 0; i < tickerArr.size(); i++)
             {
-                tickerArr.get(i).setSelected(false);
+                if (selected.toString().equals(tickerArr.get(i).toString())) {
+
+                    Log.i("test true", "true " + i);
+                    tickerArr.get(i).setSelected(true);
+                    tickerViewModel.tickers.setValue(tickerArr);
+
+                }
+                else {
+                    Log.i("test false", "false " + i);
+                    tickerArr.get(i).setSelected(false);
+                }
             }
-
-
-            if (selected.toString().equals(tickerArr.get(0).toString())) {
-                //Log.i("cheese", "cheese1");
-                tickerArr.get(0).setSelected(true);
-                tickerViewModel.tickers.setValue(tickerArr);
-                //tickerViewModel.setTicker(0, new ticker(name, true));
-                //Log.i("cheese", "cheese1.2");
-
-            }
-            else if (selected.toString().equals(tickerArr.get(1).toString())){
-
-
-                tickerArr.get(1).setSelected(true);
-                tickerViewModel.tickers.setValue(tickerArr);
-
-
-            }
-            else if (selected.toString().equals(tickerArr.get(2).toString())){
-
-
-                tickerArr.get(2).setSelected(true);
-                tickerViewModel.tickers.setValue(tickerArr);
-            }
-            else {
-                Log.i("cheese", "cheese4");
-
-            }
-
-
-
 
 
 

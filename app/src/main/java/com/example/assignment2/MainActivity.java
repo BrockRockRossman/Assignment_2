@@ -6,11 +6,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
     FragmentManager fg;
 
-
+    public myViewModel sharedModel;
 
 
     @Override
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        sharedModel = new ViewModelProvider(this).get(myViewModel.class);
 
 
         if (savedInstanceState == null) {
@@ -33,5 +36,9 @@ public class MainActivity extends AppCompatActivity {
             trans.commit();
         }
 
+    }
+
+    public myViewModel getSharedModel(){
+        return sharedModel;
     }
 }

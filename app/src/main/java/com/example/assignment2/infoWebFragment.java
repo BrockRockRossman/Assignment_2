@@ -71,15 +71,23 @@ public class infoWebFragment extends Fragment {
         return view;
     }
 
+
+    // A lot of code is going to happen here because we cannot use OnCreate for fragments
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // populate our viewmodel
         webViewModel = new ViewModelProvider(getActivity()).get(myViewModel.class);
 
-
+        // This creates an observer, the observer is looking to see when the livemutable array
+        // is changed
         webViewModel.gettickers().observe(getViewLifecycleOwner(), new Observer<ArrayList<ticker>>() {
             @Override
+            // Real creative method naming here right?
             public void onChanged(ArrayList<ticker> tickers) {
+
+                // Throw your code for what you want to happen when stuff changes
                 tickerList = tickers;
 
                 for(int i = 0; i < tickerList.size(); i++)

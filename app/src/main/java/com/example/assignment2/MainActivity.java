@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
+        // adding our viewmodel
         sharedModel = new ViewModelProvider(this).get(myViewModel.class);
 
         // Broadcast Reciever registration
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // This method is necessary
     public myViewModel getSharedModel(){
         return sharedModel;
     }

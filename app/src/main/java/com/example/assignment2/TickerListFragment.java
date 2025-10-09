@@ -114,8 +114,12 @@ public class TickerListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // setting up our viewmodel
         tickerViewModel = new ViewModelProvider(getActivity()).get(myViewModel.class);
 
+        // Another observer, reference infoWebFragment for a little more.
+        // ALso reference the slides from 11. ViewModel page 23 should have stuff on this
         tickerViewModel.gettickers().observe(getViewLifecycleOwner(), new Observer<ArrayList<ticker>>() {
             @Override
             public void onChanged(ArrayList<ticker> tickers) {

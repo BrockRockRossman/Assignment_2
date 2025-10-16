@@ -1,12 +1,18 @@
 package com.example.assignment2;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,7 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class MainActivity extends AppCompatActivity {
     FragmentManager fg;
     public myViewModel sharedModel;
-    smsReciever reciever;
+
 
 
     @Override
@@ -26,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         // adding our viewmodel
         sharedModel = new ViewModelProvider(this).get(myViewModel.class);
 
-        // Broadcast Reciever registration
-        reciever = new smsReciever();
-        IntentFilter filter = new
-                IntentFilter(Intent.ACTION_SCREEN_ON);
-        registerReceiver(reciever, filter);
+        if(ContextCompat.checkSelfPermission(
+                this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED){
+            String[] perm = new String[]{Manifest.permission.RECEIVE_SMS};
+            ActivityCompat.requestPermissions(this,perm,67);
+        }
 
         if (savedInstanceState == null) {
 
@@ -49,6 +55,38 @@ public class MainActivity extends AppCompatActivity {
             trans.commit();
         }
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        super.onNewIntent(intent);
+        String message = intent.getStringExtra("sms");
+        Toast.makeText(this, "activ: " + message, Toast.LENGTH_SHORT).show();
+
+
+
+        // Checking if SMS is the right code
+        if(message.matches("^<<[A-Za-z]+>>$"))
+        {
+            message = message.replace("<<", "");
+            message = message.replace(">>", "");
+
+            message = message.toUpperCase();
+
+            Toast.makeText(this, "Valid code", Toast.LENGTH_SHORT).show();
+
+            ticker tick = new ticker(message, false);
+
+            sharedModel.addTicker(tick);
+        }
+        else
+        {
+            Toast.makeText(this, "Invalid code", Toast.LENGTH_SHORT).show();
+        }
+
+
+        Log.i("Main", "Z");
     }
 
     // This method is necessary

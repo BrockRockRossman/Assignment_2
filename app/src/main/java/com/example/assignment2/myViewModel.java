@@ -1,5 +1,7 @@
 package com.example.assignment2;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,6 +17,8 @@ public class myViewModel extends ViewModel {
     // The mutable live data is a type that is able to change between fragments and classes
     public MutableLiveData<ArrayList<ticker>> tickers;
     private ArrayList<ticker> tickerList;
+
+    private int roundRobin = 1;
 
 
     // Method to retrieve data
@@ -53,9 +57,41 @@ public class myViewModel extends ViewModel {
     // This allows us to add a new ticker to our list
     public void addTicker(ticker tick) {
         // Create a new list and populate with the current data from mutablelivedata
+        Log.i("viewModel", "A");
+
         ArrayList<ticker> list = tickers.getValue();
+
+
+
+        if(list.size() == 6)
+        {
+            list.remove(roundRobin);
+            list.add(roundRobin, tick);
+
+            roundRobin += 1;
+            if(roundRobin > 5)
+            {
+                roundRobin = 0;
+            }
+        }
+
+        Log.i("viewModel", tick.toString());
+
+
+        for(int i = 0; i < list.size(); i++)
+        {
+            list.get(i).setSelected(false);
+        }
+
+        Log.i("viewModel", "B");
         // add new item
-        list.add(tick);
+        ticker tick2 = new ticker(tick.getTickerName(), true);
+        list.add(tick2);
+
+
+
+        Log.i("viewModel", "C");
+
         // Set the value of our mutable data to our list we just created
         tickers.setValue(list);
 

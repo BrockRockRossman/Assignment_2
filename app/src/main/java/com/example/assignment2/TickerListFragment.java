@@ -46,21 +46,7 @@ public class TickerListFragment extends Fragment {
 
 
 
-            for(int i = 0; i < tickerArr.size(); i++)
-            {
-                if (selected.toString().equals(tickerArr.get(i).toString())) {
-
-                    Log.i("test true", "true " + i);
-                    tickerArr.get(i).setSelected(true);
-                    tickerViewModel.tickers.setValue(tickerArr);
-
-                }
-                else {
-                    Log.i("test false", "false " + i);
-                    tickerArr.get(i).setSelected(false);
-                }
-            }
-
+            changePage(selected);
 
 
         };
@@ -104,6 +90,7 @@ public class TickerListFragment extends Fragment {
                 android.R.layout.simple_list_item_1, tickerArr);
         tickerList.setAdapter(adapter);
 
+
         tickerList.setOnItemClickListener(selectListener);
 
 
@@ -118,12 +105,15 @@ public class TickerListFragment extends Fragment {
         // setting up our viewmodel
         tickerViewModel = new ViewModelProvider(getActivity()).get(myViewModel.class);
 
+
+
         // Another observer, reference infoWebFragment for a little more.
         // ALso reference the slides from 11. ViewModel page 23 should have stuff on this
         tickerViewModel.gettickers().observe(getViewLifecycleOwner(), new Observer<ArrayList<ticker>>() {
             @Override
             public void onChanged(ArrayList<ticker> tickers) {
 
+                Log.i("TickerListFrag", "A");
 
                 ArrayAdapter<ticker> adapter = new ArrayAdapter<ticker>(getActivity(),
                         android.R.layout.simple_list_item_1, tickers);
@@ -133,5 +123,22 @@ public class TickerListFragment extends Fragment {
         });
 
 
+    }
+
+    public void changePage(ticker selected){
+        for(int i = 0; i < tickerArr.size(); i++)
+        {
+            if (selected.toString().equals(tickerArr.get(i).toString())) {
+
+                Log.i("test true", "true " + i);
+                tickerArr.get(i).setSelected(true);
+                tickerViewModel.tickers.setValue(tickerArr);
+
+            }
+            else {
+                Log.i("test false", "false " + i);
+                tickerArr.get(i).setSelected(false);
+            }
+        }
     }
 }

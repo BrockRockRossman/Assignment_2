@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        Log.i("Main", "Z");
+
     }
 
     // This method is necessary

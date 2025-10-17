@@ -25,7 +25,7 @@ public class TickerListFragment extends Fragment {
 
     ListView tickerList;
     ArrayList<ticker> tickerArr = new ArrayList<>();
-    String [] tickerSArr = {"NEE", "AAPL", "DIS"};
+    String [] tickerSArr;
 
     private myViewModel tickerViewModel;
 
@@ -104,6 +104,7 @@ public class TickerListFragment extends Fragment {
 
         // setting up our viewmodel
         tickerViewModel = new ViewModelProvider(getActivity()).get(myViewModel.class);
+        tickerArr = tickerViewModel.getTickers().getValue();
 
 
 
@@ -113,12 +114,15 @@ public class TickerListFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<ticker> tickers) {
 
-                Log.i("TickerListFrag", "A");
+                tickerArr = tickers;
+
+                Log.i("TickerListFrag", tickerArr.toString());
+
 
                 ArrayAdapter<ticker> adapter = new ArrayAdapter<ticker>(getActivity(),
-                        android.R.layout.simple_list_item_1, tickers);
+                        android.R.layout.simple_list_item_1, tickerArr);
                 tickerList.setAdapter(adapter);
-
+                Log.i("TickerListFrag", "B");
             }
         });
 

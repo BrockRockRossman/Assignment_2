@@ -18,7 +18,7 @@ public class myViewModel extends ViewModel {
     public MutableLiveData<ArrayList<ticker>> tickers;
     private ArrayList<ticker> tickerList;
 
-    private int roundRobin = 1;
+    private int roundRobin = 5;
 
 
     // Method to retrieve data
@@ -57,16 +57,27 @@ public class myViewModel extends ViewModel {
     // This allows us to add a new ticker to our list
     public void addTicker(ticker tick) {
         // Create a new list and populate with the current data from mutablelivedata
-        Log.i("viewModel", "A");
+
 
         ArrayList<ticker> list = tickers.getValue();
-
-
+        Log.i("viewModel", "A" + tickers.getValue().toString());
+        Log.i("viewModel", "Size: " + list.size());
 
         if(list.size() == 6)
         {
+            Log.i("ViewModel", "size is big!");
             list.remove(roundRobin);
-            list.add(roundRobin, tick);
+            Log.i("viewModel", "Post remove" + tickers.getValue().toString());
+
+
+            for(int i = 0; i < list.size(); i++)
+            {
+                list.get(i).setSelected(false);
+            }
+
+            // add new item
+            ticker tick2 = new ticker(tick.getTickerName(), true);
+            list.add(roundRobin, tick2);
 
             roundRobin += 1;
             if(roundRobin > 5)
@@ -74,23 +85,30 @@ public class myViewModel extends ViewModel {
                 roundRobin = 0;
             }
         }
-
-        Log.i("viewModel", tick.toString());
-
-
-        for(int i = 0; i < list.size(); i++)
+        else
         {
-            list.get(i).setSelected(false);
+            for(int i = 0; i < list.size(); i++)
+            {
+                list.get(i).setSelected(false);
+            }
+
+            // add new item
+            ticker tick2 = new ticker(tick.getTickerName(), true);
+            list.add(tick2);
         }
 
-        Log.i("viewModel", "B");
-        // add new item
-        ticker tick2 = new ticker(tick.getTickerName(), true);
-        list.add(tick2);
 
 
 
-        Log.i("viewModel", "C");
+
+
+
+
+
+
+
+        Log.i("viewModel", "B" + tickers.getValue().toString());
+        Log.i("viewModel", "Size: " + list.size());
 
         // Set the value of our mutable data to our list we just created
         tickers.setValue(list);
